@@ -6,23 +6,22 @@ OWM_BASE = 'http://api.openweathermap.org/data/2.5/weather'
 OWM_API_KEY = os.environ.get('OWM_API_KEY')
 
 def get_city_temp(city):
-    response = requests.get(
+    r = requests.get(
         OWM_BASE,
         params={
             'q': city,
             'units': 'Imperial',
             'APPID': OWM_API_KEY
-        }
-    )
-    return get_temp(response)
+        })
+    return get_temp(r)
 
 
-def get_temp(response):
-    obj = json.loads(response.text)
-    if response.status_code == 200:
-        return round(obj['main']['temp'])
+def get_temp(r):
+    obj = json.loads(r.text)
+    if r.status_code == 200:
+        return obj['main']['temp']
     raise Exception('ERROR {0} {1}'.format(
-            response.status_code,
+            r.status_code,
             obj['message']
         )
     )
