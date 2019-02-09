@@ -19,7 +19,7 @@ def get_city_temp(city):
 def get_temp(r):
     obj = json.loads(r.text)
     if r.status_code == 200:
-        return obj['main']['temp']
+        return round(obj['main']['temp'])
     raise Exception('ERROR {0} {1}'.format(
             r.status_code,
             obj['message']
@@ -28,7 +28,7 @@ def get_temp(r):
 
 
 if __name__ == '__main__':
-    city = raw_input('Where are you? ')
+    city = input('Where are you? ')
     city_arr = city.split()
     if len(city_arr[-1]) == 2:
         del city_arr[-1]
