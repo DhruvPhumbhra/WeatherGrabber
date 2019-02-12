@@ -2,9 +2,11 @@ import requests
 import json
 import os
 
+#OWM website and API key
 OWM_BASE = 'http://api.openweathermap.org/data/2.5/weather'
 OWM_API_KEY = os.environ.get('OWM_API_KEY')
 
+#set parameters for Json call
 def get_city_temp(city):
     r = requests.get(
         OWM_BASE,
@@ -15,7 +17,7 @@ def get_city_temp(city):
         })
     return get_temp(r)
 
-
+#find temperature if the city exists
 def get_temp(r):
     obj = json.loads(r.text)
     if r.status_code == 200:
@@ -28,7 +30,8 @@ def get_temp(r):
 
 
 if __name__ == '__main__':
-    city = input('Where are you? ')
+    city = input('Where are you?(City name and 2 character state names only) ')
+    #handle state names
     city_arr = city.split()
     if len(city_arr[-1]) == 2:
         del city_arr[-1]
